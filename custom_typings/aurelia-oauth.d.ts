@@ -68,6 +68,7 @@ interface IOAuthConfig {
     scope?: string;
     redirectUri?: string;
     alwaysRequireLogin?: boolean;
+    policy?: string;
 }
 
 interface IOAuthService {
