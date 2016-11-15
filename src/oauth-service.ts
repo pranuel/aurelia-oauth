@@ -82,6 +82,10 @@ export class OAuthService implements IOAuthService {
         if (this.config.scope) {
             redirectUrl += `&scope=${encodeURIComponent(this.config.scope)}`;
         }
+      
+        if (this.config.policy) {
+            redirectUrl += `&p=${encodeURIComponent(this.config.policy)}`;
+        }
         
         window.location.href = redirectUrl;
     };
