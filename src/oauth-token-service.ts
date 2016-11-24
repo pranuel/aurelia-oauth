@@ -2,7 +2,7 @@ import { autoinject } from 'aurelia-dependency-injection';
 
 import JwtTokenService from './jwt-token-service';
 import { objectAssign } from './oauth-polyfills';
-import LocalStorageService from './local-storge-service';
+import LocalStorageService from './local-storage-service';
 
 @autoinject()
 export class OAuthTokenService implements IOAuthTokenService {

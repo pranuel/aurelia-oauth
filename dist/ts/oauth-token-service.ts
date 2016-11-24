@@ -2,6 +2,7 @@ import { autoinject } from 'aurelia-dependency-injection';
 
 import JwtTokenService from './jwt-token-service';
 import { objectAssign } from './oauth-polyfills';
+import LocalStorageService from './local-storage-service';
 
 @autoinject()
 export class OAuthTokenService implements IOAuthTokenService {
@@ -9,7 +10,7 @@ export class OAuthTokenService implements IOAuthTokenService {
     private tokenData: IOAuthTokenData;
     public config: IOAuthTokenConfig;
 
-    constructor(private jwtTokenService: JwtTokenService) {
+    constructor(private jwtTokenService: JwtTokenService, private localStorageService: LocalStorageService) {
         this.config = {
             name: 'id_token',
             urlTokenParameters: {
@@ -53,6 +54,7 @@ export class OAuthTokenService implements IOAuthTokenService {
     };
 
     public setToken = (data: IOAuthTokenData): IOAuthTokenData => {
+        this.localStorageService.set("oauth-token", data.token);
         return this.tokenData = data;
     };    
     
