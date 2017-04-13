@@ -1,5 +1,5 @@
 [**Contributors needed**: I'm looking for people that are willing to help me maintain and improve this plugin.](https://github.com/matik12/aurelia-oauth/issues/1)
-
+ 
 ---
 
 #### NPM package [aurelia-oauth](https://www.npmjs.com/package/aurelia-oauth)
