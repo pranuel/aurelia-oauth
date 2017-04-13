@@ -22,7 +22,7 @@ export class OAuthService implements IOAuthService {
         private urlHashService: UrlHashService,
         private localStorageService: LocalStorageService,
         private eventAggregator: EventAggregator) {
-    
+
         this.defaults = {
             loginUrl: null,
             logoutUrl: null,
@@ -82,11 +82,11 @@ export class OAuthService implements IOAuthService {
         if (this.config.scope) {
             redirectUrl += `&scope=${encodeURIComponent(this.config.scope)}`;
         }
-      
+
         if (this.config.policy) {
             redirectUrl += `&p=${encodeURIComponent(this.config.policy)}`;
         }
-        
+
         window.location.href = redirectUrl;
     };
 
@@ -94,9 +94,13 @@ export class OAuthService implements IOAuthService {
         var redirectUrl = `${this.config.logoutUrl}?` +
             `${this.config.logoutRedirectParameterName}=${encodeURIComponent(this.config.redirectUri)}`;
 
+        if (this.config.policy) {
+            redirectUrl += `&p=${encodeURIComponent(this.config.policy)}`;
+        }
+
         window.location.href = redirectUrl;
         this.oAuthTokenService.removeToken();
-    };   
+    };
 
     public loginOnStateChange = (toState): boolean => {
         if (toState && this.isLoginRequired(toState) && !this.isAuthenticated() && !this.getTokenDataFromUrl()) {
@@ -109,7 +113,7 @@ export class OAuthService implements IOAuthService {
                 }
 
                 this.localStorageService.set<string>(OAUTH_STARTPAGE_STORAGE_KEY, url);
-            }           
+            }
 
             this.login();
 
@@ -119,7 +123,7 @@ export class OAuthService implements IOAuthService {
         return false;
     };
 
-    public setTokenOnRedirect = (): void => {        
+    public setTokenOnRedirect = (): void => {
         var tokenData = this.getTokenDataFromUrl();
 
         if (!this.isAuthenticated() && tokenData) {
@@ -128,7 +132,7 @@ export class OAuthService implements IOAuthService {
             if (this.localStorageService.isStorageSupported() && this.localStorageService.get(OAUTH_STARTPAGE_STORAGE_KEY)) {
                 var startPage = this.localStorageService.get<string>(OAUTH_STARTPAGE_STORAGE_KEY);
 
-                this.localStorageService.remove(OAUTH_STARTPAGE_STORAGE_KEY);                
+                this.localStorageService.remove(OAUTH_STARTPAGE_STORAGE_KEY);
                 window.location.href = startPage;
             } else {
                 // Redirect to the base application route
@@ -139,7 +143,7 @@ export class OAuthService implements IOAuthService {
         }
     };
 
-    private isLoginRequired = (state): boolean => { 
+    private isLoginRequired = (state): boolean => {
         var routeHasConfig = state.settings && state.settings.requireLogin !== undefined;
         var routeRequiresLogin = routeHasConfig && state.settings.requireLogin ? true : false;
 
